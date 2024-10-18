@@ -1,6 +1,6 @@
 package com.Recettes.recettes.model;
 
-public class Etape {
+public class instructions {
     private String instruction;
     private int numeroEtape;
 
