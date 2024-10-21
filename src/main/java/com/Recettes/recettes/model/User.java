@@ -17,8 +17,19 @@ public class User {
     private String password;
     private String role;
     private List<Recipe> recipes;
+    private String image;
 
-    public ObjectId getId() {
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
+
+public ObjectId getId() {
         return id;
     }
 
