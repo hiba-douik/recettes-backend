@@ -1,25 +1,15 @@
 package com.Recettes.recettes.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
     private String recipeId;
     private String title;
     private String description;
-    private List<String> ingredients = new ArrayList<>();
-    private List<String> instructions = new ArrayList<>();
-    private List<Comment> comments = new ArrayList<>();
+    private List<String> ingredients;
+    private List<String> instructions;
 
-
-    public Recipe() {}
-
-    public Recipe(String recipeId, String title, String description) {
-        this.recipeId = recipeId;
-        this.title = title;
-        this.description = description;
-    }
-
+    // Getters and setters
     public String getRecipeId() {
         return recipeId;
     }
@@ -58,13 +48,5 @@ public class Recipe {
 
     public void setInstructions(List<String> instructions) {
         this.instructions = instructions;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
     }
 }

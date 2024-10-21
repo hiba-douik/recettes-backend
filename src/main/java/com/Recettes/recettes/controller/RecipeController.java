@@ -2,43 +2,51 @@ package com.Recettes.recettes.controller;
 
 import com.Recettes.recettes.model.Recipe;
 import com.Recettes.recettes.service.RecipeService;
-import org.bson.types.ObjectId;
+import com.Recettes.recettes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users/{userId}/recipes")
+@RequestMapping("/api/recipes")
 public class RecipeController {
 
     @Autowired
     private RecipeService recipeService;
 
-    @PostMapping
-    public Recipe createRecipe(@PathVariable ObjectId userId, @RequestBody Recipe recipe) {
-        return recipeService.createRecipe(userId, recipe);
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/{userId}")
+    public ResponseEntity<Recipe> createRecipe(@PathVariable String userId, @RequestBody Recipe recipe) {
+        Recipe createdRecipe = recipeService.createRecipe(userId, recipe);
+        return new ResponseEntity<>(createdRecipe, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{recipeId}")
-    public Recipe getRecipeById(@PathVariable ObjectId userId, @PathVariable String recipeId) {
-        return recipeService.getRecipeById(userId, recipeId);
+    @GetMapping("/{userId}/{recipeId}")
+    public ResponseEntity<Recipe> getRecipeById(@PathVariable String userId, @PathVariable String recipeId) {
+        Recipe recipe = recipeService.getRecipeById(userId, recipeId);
+        return new ResponseEntity<>(recipe, HttpStatus.OK);
     }
 
-    @GetMapping
-    public List<Recipe> getAllRecipes(@PathVariable ObjectId userId) {
-        return recipeService.getAllRecipes(userId);
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Recipe>> getUserRecipes(@PathVariable String userId) {
+        List<Recipe> recipes = userService.getRecipesByUserId(userId);
+        return new ResponseEntity<>(recipes, HttpStatus.OK);
     }
 
-    @PutMapping("/{recipeId}")
-    public Recipe updateRecipe(@PathVariable ObjectId userId, @PathVariable String recipeId, @RequestBody Recipe recipe) {
-        return recipeService.updateRecipe(userId, recipeId, recipe);
+    @PutMapping("/{userId}/{recipeId}")
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable String userId, @PathVariable String recipeId, @RequestBody Recipe recipe) {
+        Recipe updatedRecipe = recipeService.updateRecipe(userId, recipeId, recipe);
+        return new ResponseEntity<>(updatedRecipe, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{recipeId}")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable ObjectId userId, @PathVariable String recipeId) {
+    @DeleteMapping("/{userId}/{recipeId}")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable String userId, @PathVariable String recipeId) {
         recipeService.deleteRecipe(userId, recipeId);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

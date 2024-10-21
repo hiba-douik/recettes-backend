@@ -18,7 +18,6 @@ public class User {
     private String role;
     private List<Recipe> recipes;
 
-
     public ObjectId getId() {
         return id;
     }
