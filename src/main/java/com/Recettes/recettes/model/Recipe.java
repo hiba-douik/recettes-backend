@@ -8,8 +8,16 @@ public class Recipe {
     private String description;
     private List<String> ingredients;
     private List<String> instructions;
+    private String image;
 
-    // Getters and setters
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getRecipeId() {
         return recipeId;
     }
